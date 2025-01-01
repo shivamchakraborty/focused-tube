@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { initializeDatabase } from './config/database';
 import authRoutes from './routes/auth';
+import authWeb3Routes from './routes/authWeb3';
 import favoritesRoutes from './routes/favorites';
 
 dotenv.config();
@@ -15,6 +16,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/auth-web3', authWeb3Routes);
 app.use('/api/favorites', favoritesRoutes);
 
 // Initialize database and start server

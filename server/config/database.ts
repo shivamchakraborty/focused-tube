@@ -34,6 +34,18 @@ export async function initializeDatabase() {
       );
 
       CREATE INDEX IF NOT EXISTS idx_favorites_user_id ON favorites(user_id);
+
+      ALTER TABLE users
+      ADD COLUMN IF NOT EXISTS wallet_address VARCHAR(255) UNIQUE,
+      ALTER COLUMN email DROP NOT NULL,
+      ALTER COLUMN password DROP NOT NULL;
+
+      CREATE TABLE IF NOT EXISTS nonces (
+        wallet_address VARCHAR(255) UNIQUE NOT NULL,
+        nonce VARCHAR(255) NOT NULL,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        expire_at TIMESTAMP WITH TIME ZONE NOT NULL
+      );
     `);
     console.log('Database initialized successfully');
   } catch (error) {
